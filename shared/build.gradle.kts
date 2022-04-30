@@ -1,6 +1,8 @@
 plugins {
+    id("com.squareup.sqldelight")
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
 }
 
@@ -21,7 +23,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(Dependencies.Kotlin.coroutines)
+                implementation(Dependencies.Kotlin.serialization)
                 implementation(Dependencies.Ktor.core)
+                implementation(Dependencies.Ktor.logging)
+                implementation(Dependencies.Ktor.contentNegotiation)
+                implementation(Dependencies.Ktor.serializationJson)
+                implementation(Dependencies.SqlDelight.core)
+                implementation(Dependencies.SqlDelight.coroutines)
             }
         }
         val commonTest by getting {
@@ -31,7 +40,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation(Dependencies.Ktor.android)
                 implementation(Dependencies.Ktor.okhttp)
+                implementation(Dependencies.SqlDelight.androidDriver)
             }
         }
         val androidTest by getting
