@@ -36,4 +36,5 @@ dependencies {
 
     implementation(Dependencies.Jetpack.core)
     implementation(Dependencies.JetpackCompose.lifecycleViewModel)
+    implementation(Dependencies.JetpackCompose.Voyager.core)
 }
