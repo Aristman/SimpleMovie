@@ -23,15 +23,15 @@ interface Action
 
 private const val ERROR_LOG_TAG = "ViewModel Error"
 
-abstract class BaseViewModel<ST, AC : Action, EV : Event>(initState: ST) : ViewModel() {
+abstract class BaseViewModel<ST>(initState: ST) : ViewModel() {
     private val _state = MutableStateFlow(initState)
     val state: StateFlow<ST>
         get() = _state.asStateFlow()
 
-    private val action = MutableSharedFlow<AC>()
+    private val action = MutableSharedFlow<Action>()
 
-    private val _event = Channel<EV?>(capacity = Channel.CONFLATED)
-    val event: Flow<EV?>
+    private val _event = Channel<Event?>(capacity = Channel.CONFLATED)
+    val event: Flow<Event?>
         get() = _event.receiveAsFlow()
 
     private var _navigator: Navigator? = null
@@ -48,7 +48,7 @@ abstract class BaseViewModel<ST, AC : Action, EV : Event>(initState: ST) : ViewM
         this._navigator = navigator
     }
 
-    fun sendAction(action: AC) {
+    fun sendAction(action: Action) {
         launch {
             this@BaseViewModel.action.emit(action)
         }
@@ -64,7 +64,7 @@ abstract class BaseViewModel<ST, AC : Action, EV : Event>(initState: ST) : ViewM
         Log.d(ERROR_LOG_TAG, message ?: error.message.orEmpty(), error)
     }
 
-    protected fun sendEvent(event: EV) {
+    protected fun sendEvent(event: Event) {
         launch {
             _event.send(event)
         }
@@ -80,5 +80,5 @@ abstract class BaseViewModel<ST, AC : Action, EV : Event>(initState: ST) : ViewM
         _state.tryEmit(reduceBlock())
     }
 
-    protected abstract fun reduceStateByAction(currentState: ST, action: AC): ST
+    protected abstract fun reduceStateByAction(currentState: ST, action: Action): ST
 }

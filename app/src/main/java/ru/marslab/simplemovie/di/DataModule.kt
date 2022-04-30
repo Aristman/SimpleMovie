@@ -8,31 +8,55 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.marslab.samplemovie.shared.data.db.DataStore
 import ru.marslab.samplemovie.shared.data.db.DataStoreProvider
+import ru.marslab.samplemovie.shared.data.db.PagingDataStore
 import ru.marslab.samplemovie.shared.data.network.MovieApi
 import ru.marslab.samplemovie.shared.data.network.MovieApiProvider
 import ru.marslab.simplemovie.BuildConfig
-import ru.marslab.simplemovie.data.DataSource
-import ru.marslab.simplemovie.data.DataSourceImpl
+import ru.marslab.simplemovie.data.MovieRepositoryImpl
+import ru.marslab.simplemovie.domain.MovieRepository
+import javax.inject.Named
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
     @Provides
+    @Named("databaseName")
+    fun provideDatabaseName(): String = BuildConfig.databaseName
+
+    @Provides
     fun provideMovieApi(): MovieApi =
         MovieApiProvider().get(
             baseUrl = BuildConfig.baseUrl,
+            apiKey = BuildConfig.imdbMoviesApiKey,
             enableLogging = BuildConfig.logging
         )
 
     @Provides
-    fun provideDataStore(@ApplicationContext context: Context): DataStore =
-        DataStoreProvider().get(
+    fun provideDataStore(
+        @ApplicationContext context: Context,
+        @Named("databaseName") databaseName: String
+    ): DataStore =
+        DataStoreProvider(
             context = context,
-            databaseName = BuildConfig.databaseName
-        )
+            databaseName = databaseName
+        ).get()
 
     @Provides
-    fun provideDataSource(movieApi: MovieApi, dataStore: DataStore): DataSource =
-        DataSourceImpl(movieApi, dataStore)
+    fun providePagingDataStore(
+        @ApplicationContext context: Context,
+        @Named("databaseName") databaseName: String
+    ): PagingDataStore =
+        DataStoreProvider(
+            context = context,
+            databaseName = databaseName
+        ).getPaging()
+
+    @Provides
+    fun provideDataSource(
+        movieApi: MovieApi,
+        dataStore: DataStore,
+        pagingDataStore: PagingDataStore
+    ): MovieRepository =
+        MovieRepositoryImpl(movieApi, dataStore, pagingDataStore)
 }

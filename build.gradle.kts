@@ -6,6 +6,7 @@ plugins {
 
 buildscript {
     dependencies {
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:${Versions.secretGradlePlugin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}")

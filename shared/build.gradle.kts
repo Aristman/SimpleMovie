@@ -31,6 +31,7 @@ kotlin {
                 implementation(Dependencies.Ktor.serializationJson)
                 implementation(Dependencies.SqlDelight.core)
                 implementation(Dependencies.SqlDelight.coroutines)
+                implementation(Dependencies.SqlDelight.paging3)
             }
         }
         val commonTest by getting {
