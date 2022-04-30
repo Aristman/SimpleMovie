@@ -57,3 +57,9 @@ android {
         targetSdk = AppConfig.targetSdk
     }
 }
+
+sqldelight {
+    database("MovieDatabase") {
+        packageName = "ru.marslab.simplemovie.shared.database"
+    }
+}

@@ -1,5 +1,11 @@
 package ru.marslab.samplemovie.shared
 
-expect class Platform() {
+import com.squareup.sqldelight.db.SqlDriver
+
+internal expect class Platform() {
     val platform: String
+}
+
+internal expect class DatabaseDriverFactory {
+    fun createDriver(): SqlDriver
 }
