@@ -1,4 +1,4 @@
-package ru.marslab.simplemovie.ui.theme
+package ru.marslab.simplemovie.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

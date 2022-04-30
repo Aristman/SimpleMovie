@@ -1,9 +1,16 @@
 plugins {
-    id("com.android.application") version "7.1.3" apply false
-    id("com.android.library") version "7.1.3" apply false
-    id("org.jetbrains.kotlin.android") version "1.5.21" apply false
+    id("com.android.application") version Versions.gradle apply false
+    id("com.android.library") version Versions.gradle apply false
+    id("org.jetbrains.kotlin.android") version Versions.kotlin apply false
 }
 
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
+        classpath("com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}")
+    }
+}
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

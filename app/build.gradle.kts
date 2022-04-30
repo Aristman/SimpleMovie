@@ -1,24 +1,26 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    kotlin("android")
+    kotlin("kapt")
 }
 
-val composeVersion = "1.0.1"
-
 android {
-    compileSdk = 32
+    compileSdk = AppConfig.completeSdk
 
     defaultConfig {
-        applicationId = "ru.marslab.simplemovie"
-        minSdk = 26
-        targetSdk = 32
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = AppConfig.applicationId
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
+        versionCode = Releases.versionCode
+        versionName = Releases.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "baseUrl", "\"https://imdb-api.com\"")
+        buildConfigField("Boolean", "logging", "true")
+        buildConfigField("String", "databaseName", "\"movie.db\"")
     }
 
     buildTypes {
@@ -30,17 +32,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = AppConfig.javaVersion
+        targetCompatibility = AppConfig.javaVersion
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = AppConfig.jvmTarget
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerExtensionVersion = Versions.Compose.core
     }
     packagingOptions {
         resources.apply {
@@ -51,15 +53,23 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.material:material:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    implementation("androidx.activity:activity-compose:1.4.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeVersion")
-    debugImplementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    implementation(project(Module.core))
+    implementation(project(Module.shared))
+
+    implementation(Dependencies.Jetpack.core)
+    implementation(Dependencies.Jetpack.lifeCycle)
+    implementation(Dependencies.JetpackCompose.ui)
+    implementation(Dependencies.JetpackCompose.material)
+    implementation(Dependencies.JetpackCompose.uiTooling)
+    implementation(Dependencies.JetpackCompose.activity)
+    implementation(Dependencies.JetpackCompose.constraintLayout)
+
+    implementation(Dependencies.Dagger.hilt)
+    kapt(Dependencies.Dagger.hiltCompiler)
+
+    testImplementation(Dependencies.Test.junit)
+    androidTestImplementation(Dependencies.Test.junitExt)
+    androidTestImplementation(Dependencies.Test.espresso)
+    androidTestImplementation(Dependencies.Test.composeUi)
+    debugImplementation(Dependencies.JetpackCompose.uiTooling)
 }
