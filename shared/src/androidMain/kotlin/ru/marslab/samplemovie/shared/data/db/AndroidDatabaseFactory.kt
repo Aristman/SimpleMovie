@@ -1,4 +1,4 @@
-package ru.marslab.samplemovie.shared.data.database
+package ru.marslab.samplemovie.shared.data.db
 
 import android.content.Context
 import ru.marslab.samplemovie.shared.DatabaseDriverFactory
