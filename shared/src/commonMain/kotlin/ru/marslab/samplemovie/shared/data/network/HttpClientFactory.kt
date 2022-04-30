@@ -6,7 +6,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import ru.marslab.samplemovie.shared.httpClient
 
-class HttpClientFactory(enableLogging: Boolean) {
+internal class HttpClientFactory(enableLogging: Boolean) {
 
     private val httpClient = httpClient(enableLogging) {
         install(ContentNegotiation) {

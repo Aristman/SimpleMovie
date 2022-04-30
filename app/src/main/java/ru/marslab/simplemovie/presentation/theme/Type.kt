@@ -1,4 +1,4 @@
-package ru.marslab.simplemovie.ui.theme
+package ru.marslab.simplemovie.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

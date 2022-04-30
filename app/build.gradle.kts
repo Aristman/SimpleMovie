@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -17,6 +18,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "baseUrl", "\"https://imdb-api.com\"")
+        buildConfigField("Boolean", "logging", "true")
+        buildConfigField("String", "databaseName", "\"movie.db\"")
     }
 
     buildTypes {
@@ -49,6 +53,9 @@ android {
 
 dependencies {
 
+    implementation(project(Module.core))
+    implementation(project(Module.shared))
+
     implementation(Dependencies.Jetpack.core)
     implementation(Dependencies.Jetpack.lifeCycle)
     implementation(Dependencies.JetpackCompose.ui)
@@ -56,6 +63,10 @@ dependencies {
     implementation(Dependencies.JetpackCompose.uiTooling)
     implementation(Dependencies.JetpackCompose.activity)
     implementation(Dependencies.JetpackCompose.constraintLayout)
+
+    implementation(Dependencies.Dagger.hilt)
+    kapt(Dependencies.Dagger.hiltCompiler)
+
     testImplementation(Dependencies.Test.junit)
     androidTestImplementation(Dependencies.Test.junitExt)
     androidTestImplementation(Dependencies.Test.espresso)
