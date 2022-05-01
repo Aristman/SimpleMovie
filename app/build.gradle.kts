@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -63,6 +65,12 @@ dependencies {
     implementation(Dependencies.JetpackCompose.uiTooling)
     implementation(Dependencies.JetpackCompose.activity)
     implementation(Dependencies.JetpackCompose.constraintLayout)
+    implementation(Dependencies.Jetpack.Paging.core)
+    implementation(Dependencies.Jetpack.Paging.compose)
+    implementation(Dependencies.JetpackCompose.Voyager.core)
+    implementation(Dependencies.JetpackCompose.Voyager.viewModel)
+    implementation(Dependencies.JetpackCompose.Voyager.hilt)
+    implementation(Dependencies.JetpackCompose.landscapistGlide)
 
     implementation(Dependencies.Dagger.hilt)
     kapt(Dependencies.Dagger.hiltCompiler)

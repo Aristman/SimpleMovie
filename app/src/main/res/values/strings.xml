@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleMovie</string>
+    <string name="top_250_movies_header">Top 250 фильмов</string>
 </resources>

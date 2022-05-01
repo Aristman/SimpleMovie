@@ -23,7 +23,7 @@ interface Action
 
 private const val ERROR_LOG_TAG = "ViewModel Error"
 
-abstract class BaseViewModel<ST, AC : Action, EV : Event>(initState: ST) : ViewModel() {
+abstract class BaseViewModel<ST, EV : Event, AC : Action>(initState: ST) : ViewModel() {
     private val _state = MutableStateFlow(initState)
     val state: StateFlow<ST>
         get() = _state.asStateFlow()
@@ -52,6 +52,10 @@ abstract class BaseViewModel<ST, AC : Action, EV : Event>(initState: ST) : ViewM
         launch {
             this@BaseViewModel.action.emit(action)
         }
+    }
+
+    fun popUp() {
+        navigator.pop()
     }
 
     protected fun launch(block: suspend CoroutineScope.() -> Unit) {

@@ -1,3 +1,8 @@
 package ru.marslab.samplemovie.shared.data.network
 
-interface MovieApi
+import ru.marslab.samplemovie.shared.domain.entity.Movie
+
+interface MovieApi {
+    suspend fun getTop250Movies(): List<Movie>
+    suspend fun getMovie(movieId: String): Movie
+}

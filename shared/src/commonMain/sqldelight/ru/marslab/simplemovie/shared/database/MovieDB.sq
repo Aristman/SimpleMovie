@@ -1,0 +1,41 @@
+CREATE TABLE Top250MoviesDbEntity(
+id TEXT NOT NULL,
+title TEXT NOT NULL,
+description TEXT NOT NULL,
+rating TEXT NOT NULL,
+image TEXT NOT NULL,
+year TEXT NOT NULL
+);
+
+CREATE TABLE Movies(
+id TEXT NOT NULL,
+title TEXT NOT NULL,
+description TEXT NOT NULL,
+rating TEXT NOT NULL,
+image TEXT NOT NULL,
+images TEXT NOT NULL,
+year TEXT NOT NULL
+);
+
+getTop250Movies:
+SELECT * FROM Top250MoviesDbEntity
+ORDER BY rating DESC
+LIMIT :limit OFFSET :offset;
+
+top250MoviesCount:
+SELECT count(*) FROM Top250MoviesDbEntity;
+
+clearTop250Movies:
+DELETE FROM Top250MoviesDbEntity;
+
+saveMovieToTop250:
+INSERT OR REPLACE INTO Top250MoviesDbEntity
+VALUES ?;
+
+getMovie:
+SELECT * FROM Movies
+WHERE id=?;
+
+updateMovie:
+INSERT OR REPLACE INTO Movies
+VALUES ?;
