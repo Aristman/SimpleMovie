@@ -1,6 +1,8 @@
-package ru.marslab.samplemovie.shared.domain.entity
+package ru.marslab.simplemovie.presentation.moviedetail.model
 
-data class Movie(
+import ru.marslab.samplemovie.shared.domain.entity.Image
+
+data class MovieFullUi(
     val id: String,
     val title: String,
     val description: String,

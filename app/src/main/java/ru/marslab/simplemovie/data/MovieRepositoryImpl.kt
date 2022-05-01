@@ -23,7 +23,7 @@ internal class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi,
     private val dataStore: DataStore,
     private val pagingDataStore: PagingDataStore,
-    private val pageSize: Int = 30,
+    private val pageSize: Int = 10,
     override val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : MovieRepository {
 
@@ -39,4 +39,13 @@ internal class MovieRepositoryImpl @Inject constructor(
             }
         )
     }.flowOn(dispatcher)
+
+    override fun getMovieInfo(movieId: String, fromNetwork: Boolean): Flow<Movie> = flow {
+        var storeMovie = dataStore.getMovie(movieId)
+        if (fromNetwork || storeMovie == null) {
+            storeMovie = movieApi.getMovie(movieId)
+            dataStore.saveMovie(storeMovie)
+        }
+        emit(storeMovie)
+    }
 }

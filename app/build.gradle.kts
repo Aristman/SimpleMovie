@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -69,6 +70,7 @@ dependencies {
     implementation(Dependencies.JetpackCompose.Voyager.core)
     implementation(Dependencies.JetpackCompose.Voyager.viewModel)
     implementation(Dependencies.JetpackCompose.Voyager.hilt)
+    implementation(Dependencies.JetpackCompose.landscapistGlide)
 
     implementation(Dependencies.Dagger.hilt)
     kapt(Dependencies.Dagger.hiltCompiler)

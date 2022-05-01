@@ -23,15 +23,15 @@ interface Action
 
 private const val ERROR_LOG_TAG = "ViewModel Error"
 
-abstract class BaseViewModel<ST>(initState: ST) : ViewModel() {
+abstract class BaseViewModel<ST, EV : Event, AC : Action>(initState: ST) : ViewModel() {
     private val _state = MutableStateFlow(initState)
     val state: StateFlow<ST>
         get() = _state.asStateFlow()
 
-    private val action = MutableSharedFlow<Action>()
+    private val action = MutableSharedFlow<AC>()
 
-    private val _event = Channel<Event?>(capacity = Channel.CONFLATED)
-    val event: Flow<Event?>
+    private val _event = Channel<EV?>(capacity = Channel.CONFLATED)
+    val event: Flow<EV?>
         get() = _event.receiveAsFlow()
 
     private var _navigator: Navigator? = null
@@ -48,10 +48,14 @@ abstract class BaseViewModel<ST>(initState: ST) : ViewModel() {
         this._navigator = navigator
     }
 
-    fun sendAction(action: Action) {
+    fun sendAction(action: AC) {
         launch {
             this@BaseViewModel.action.emit(action)
         }
+    }
+
+    fun popUp() {
+        navigator.pop()
     }
 
     protected fun launch(block: suspend CoroutineScope.() -> Unit) {
@@ -64,7 +68,7 @@ abstract class BaseViewModel<ST>(initState: ST) : ViewModel() {
         Log.d(ERROR_LOG_TAG, message ?: error.message.orEmpty(), error)
     }
 
-    protected fun sendEvent(event: Event) {
+    protected fun sendEvent(event: EV) {
         launch {
             _event.send(event)
         }
@@ -80,5 +84,5 @@ abstract class BaseViewModel<ST>(initState: ST) : ViewModel() {
         _state.tryEmit(reduceBlock())
     }
 
-    protected abstract fun reduceStateByAction(currentState: ST, action: Action): ST
+    protected abstract fun reduceStateByAction(currentState: ST, action: AC): ST
 }

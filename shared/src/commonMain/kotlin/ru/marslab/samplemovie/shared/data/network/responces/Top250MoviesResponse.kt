@@ -10,20 +10,21 @@ import ru.marslab.samplemovie.shared.domain.entity.Movie
 @Serializable
 data class Top250MoviesResponse(
     @SerialName("errorMessage")
-    val errorMessage: String,
+    val errorMessage: String?,
     @SerialName("items")
     val items: List<MovieNetworkEntity>
 ) : Dto<List<Movie>> {
     override fun convert(): List<Movie> {
-        if (errorMessage.isNotBlank()) throw ServerException(errorMessage)
+        if (!errorMessage.isNullOrBlank()) throw ServerException(errorMessage)
         return items.map {
             Movie(
-                id = it.id,
-                title = it.title,
-                description = it.fullTitle,
-                rating = kotlin.runCatching { it.rank.toFloat() }.getOrDefault(0f),
-                image = it.image,
-                year = it.year
+                id = it.id.orEmpty(),
+                title = it.title.orEmpty(),
+                description = it.fullTitle.orEmpty(),
+                rating = it.imDbRating.orEmpty(),
+                image = it.image.orEmpty(),
+                images = emptyList(),
+                year = it.year.orEmpty()
             )
         }
     }

@@ -7,4 +7,5 @@ import ru.marslab.simplemovie.core.BaseRepository
 
 interface MovieRepository : BaseRepository {
     fun getTop250Movies(fromNetwork: Boolean): Flow<PagingData<Movie>>
+    fun getMovieInfo(movieId: String, fromNetwork: Boolean): Flow<Movie>
 }
