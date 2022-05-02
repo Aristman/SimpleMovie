@@ -20,15 +20,18 @@ internal class MovieDetailViewModel @Inject constructor(
     ): MovieDetailState =
         when (action) {
             is MovieDetailAction.LoadMovieInfo -> {
-                loadMovieInfo(action.movieId)
+                loadMovieInfo(action.movieId, action.fromNetwork)
                 currentState
             }
         }
 
-    private fun loadMovieInfo(movieId: String) {
+    private fun loadMovieInfo(movieId: String, fromNetwork: Boolean) {
         launch {
-            getMovieInfo(movieId)
-                .catch { handleError(it) }
+            getMovieInfo(movieId, fromNetwork)
+                .catch {
+                    handleError(it)
+                    reduceState { state.value.copy(isLoading = false) }
+                }
                 .onStart { reduceState { state.value.copy(isLoading = true) } }
                 .collect {
                     reduceState {

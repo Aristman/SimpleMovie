@@ -36,8 +36,6 @@ data class TitleResponse(
     val directorList: List<StarNetworkEntity>,
     @SerialName("directors")
     val directors: String,
-    @SerialName("errorMessage")
-    val errorMessage: String?,
     @SerialName("fullCast")
     val fullCast: FullCastResponse?,
     @SerialName("fullTitle")
@@ -75,7 +73,7 @@ data class TitleResponse(
     @SerialName("plotLocalIsRtl")
     val plotLocalIsRtl: Boolean,
     @SerialName("posters")
-    val posters: PostersNetworkEntity,
+    val posters: PostersNetworkEntity?,
     @SerialName("ratings")
     val ratings: RatingsResponse?,
     @SerialName("releaseDate")
@@ -90,8 +88,6 @@ data class TitleResponse(
     val starList: List<StarNetworkEntity>,
     @SerialName("stars")
     val stars: String,
-    @SerialName("tagline")
-    val tagline: String,
     @SerialName("title")
     val title: String,
     @SerialName("trailer")
@@ -103,18 +99,24 @@ data class TitleResponse(
     @SerialName("writers")
     val writers: String,
     @SerialName("year")
-    val year: String
+    val year: String,
+    @SerialName("errorMessage")
+    val errorMessage: String?
 ) : Dto<Movie> {
     override fun convert(): Movie {
         if (!errorMessage.isNullOrBlank()) throw ServerException(errorMessage)
         return Movie(
             id = id,
             title = title,
-            description = plotLocal,
+            description = plotLocal.ifEmpty { plot },
             rating = imDbRating,
             image = image,
             images = images?.items?.convert() ?: emptyList(),
-            year = year
+            year = year,
+            release = releaseDate,
+            runtime = runtimeStr,
+            poster = posters?.posters?.first()?.link.orEmpty(),
+            genres = genres
         )
     }
 }

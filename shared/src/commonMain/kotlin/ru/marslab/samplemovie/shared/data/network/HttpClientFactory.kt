@@ -10,7 +10,12 @@ internal class HttpClientFactory(enableLogging: Boolean) {
 
     private val httpClient = httpClient(enableLogging) {
         install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true })
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                    coerceInputValues = true
+                }
+            )
         }
     }
 

@@ -7,5 +7,9 @@ data class Movie(
     val rating: String,
     val image: String,
     val images: List<Image>,
-    val year: String
+    val year: String,
+    val release: String,
+    val runtime: String,
+    val poster: String,
+    val genres: String
 )

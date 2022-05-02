@@ -35,7 +35,7 @@ import ru.marslab.simplemovie.presentation.top250movies.model.MovieShortUi
 import ru.marslab.simplemovie.presentation.top250movies.model.Top250MoviesAction
 import ru.marslab.simplemovie.presentation.widgets.LoadingStateWidget
 import ru.marslab.simplemovie.presentation.widgets.MainAppTopBar
-import ru.marslab.simplemovie.presentation.widgets.RatingWoundWidget
+import ru.marslab.simplemovie.presentation.widgets.RatingRoundWidget
 
 class Top250MoviesScreen : AndroidScreen() {
 
@@ -105,7 +105,7 @@ private fun MovieGridItem(
                         .align(Alignment.BottomStart)
                         .padding(start = 8.dp, bottom = 88.dp)
                 ) {
-                    RatingWoundWidget(movie.rating)
+                    RatingRoundWidget(movie.rating)
                 }
             }
         }

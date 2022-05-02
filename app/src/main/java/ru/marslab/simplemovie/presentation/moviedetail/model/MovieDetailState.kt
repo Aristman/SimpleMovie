@@ -5,10 +5,14 @@ data class MovieDetailState(
         id = "",
         title = "",
         description = "",
-        rating = "",
+        rating = 0f,
         image = "",
         images = emptyList(),
-        year = ""
+        year = "",
+        poster = "",
+        runtime = "",
+        release = "",
+        genres = ""
     ),
     val isLoading: Boolean = false
 )

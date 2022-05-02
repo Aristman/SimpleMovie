@@ -7,8 +7,12 @@ fun Movie.toFullUi(): MovieFullUi =
         id = id,
         title = title,
         description = description,
-        rating = rating,
+        rating = kotlin.runCatching { rating.toFloat() / 10f }.getOrDefault(0f),
         image = image,
         images = images,
-        year = year
+        year = year,
+        release = release,
+        runtime = runtime,
+        poster = poster,
+        genres = genres
     )
