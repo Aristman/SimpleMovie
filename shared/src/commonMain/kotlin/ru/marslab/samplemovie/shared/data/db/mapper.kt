@@ -15,7 +15,11 @@ fun Top250MoviesDbEntity.toDomain(): Movie =
         rating = rating,
         image = image,
         images = emptyList(),
-        year = year
+        year = year,
+        release = "",
+        runtime = "",
+        poster = "",
+        genres = ""
     )
 
 internal fun Movie.toTop250MoviesDb(): Top250MoviesDbEntity =
@@ -35,8 +39,13 @@ fun Movies.toDomain(): Movie =
         description = description,
         rating = rating,
         image = image,
-        images = (images spitToList OBJECT_SEPARATOR).map { it toImage ITEM_SEPARATOR },
-        year = year
+        images = kotlin.runCatching { (images spitToList OBJECT_SEPARATOR).map { it toImage ITEM_SEPARATOR } }
+            .getOrNull() ?: emptyList(),
+        year = year,
+        release = release,
+        runtime = runtime,
+        poster = poster,
+        genres = genres
     )
 
 internal fun Movie.toMovieDb(): Movies =
@@ -47,5 +56,9 @@ internal fun Movie.toMovieDb(): Movies =
         rating = rating,
         image = image,
         images = images.joinToString(OBJECT_SEPARATOR.toString()) { it.toDb(ITEM_SEPARATOR) },
-        year = year
+        year = year,
+        release = release,
+        runtime = runtime,
+        poster = poster,
+        genres = genres
     )

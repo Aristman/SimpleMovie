@@ -1,5 +1,5 @@
 CREATE TABLE Top250MoviesDbEntity(
-id TEXT NOT NULL,
+id TEXT PRIMARY KEY NOT NULL,
 title TEXT NOT NULL,
 description TEXT NOT NULL,
 rating TEXT NOT NULL,
@@ -8,13 +8,17 @@ year TEXT NOT NULL
 );
 
 CREATE TABLE Movies(
-id TEXT NOT NULL,
+id TEXT PRIMARY KEY NOT NULL,
 title TEXT NOT NULL,
 description TEXT NOT NULL,
 rating TEXT NOT NULL,
 image TEXT NOT NULL,
 images TEXT NOT NULL,
-year TEXT NOT NULL
+year TEXT NOT NULL,
+release TEXT NOT NULL,
+runtime TEXT NOT NULL,
+poster TEXT NOT NULL,
+genres TEXT NOT NULL
 );
 
 getTop250Movies:

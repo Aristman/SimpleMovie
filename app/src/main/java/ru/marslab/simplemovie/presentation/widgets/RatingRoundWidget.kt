@@ -16,18 +16,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RatingWoundWidget(rating: Float) {
+fun RatingRoundWidget(rating: Float) {
     val color = Color(red = 1 - rating, green = rating, blue = 0f)
-    CircularProgressIndicator(
-        modifier = Modifier
-            .clip(shape = RoundedCornerShape(50))
-            .size(32.dp)
-            .background(color = Color.DarkGray),
-        strokeWidth = 2.dp,
-        color = color,
-        progress = rating
-    )
     Box(modifier = Modifier.size(32.dp), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .clip(shape = RoundedCornerShape(50))
+                .size(32.dp)
+                .background(color = Color.DarkGray),
+            strokeWidth = 2.dp,
+            color = color,
+            progress = rating
+        )
         Text(
             text = (rating * 100).toInt().toString(),
             color = color,

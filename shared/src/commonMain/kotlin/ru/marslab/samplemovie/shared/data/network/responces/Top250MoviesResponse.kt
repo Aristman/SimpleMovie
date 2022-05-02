@@ -24,7 +24,11 @@ data class Top250MoviesResponse(
                 rating = it.imDbRating.orEmpty(),
                 image = it.image.orEmpty(),
                 images = emptyList(),
-                year = it.year.orEmpty()
+                year = it.year.orEmpty(),
+                release = "",
+                runtime = "",
+                poster = "",
+                genres = ""
             )
         }
     }
