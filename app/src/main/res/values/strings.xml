@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SimpleMovie</string>
+    <string name="top_250_movies_header">Top 250 фильмов</string>
+    <string name="released">Релиз: %s</string>
+    <string name="movie_description_title">Описание</string>
 </resources>

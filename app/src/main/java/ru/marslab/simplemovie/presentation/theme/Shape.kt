@@ -1,4 +1,4 @@
-package ru.marslab.simplemovie.ui.theme
+package ru.marslab.simplemovie.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
